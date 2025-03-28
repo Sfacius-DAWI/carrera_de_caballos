@@ -5,6 +5,7 @@ export default {
   output: {
     filename: 'bundle.js',
     path: path.resolve(process.cwd(), './view/dist'),
+    publicPath: '', // Asegura que las rutas sean relativas
   },
   module: {
     rules: [
@@ -13,16 +14,17 @@ export default {
         use: ['style-loader', 'css-loader'],
       },
       {
-        // Transpila archivos JavaScript usando Buble sin transformar los módulos
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'buble-loader',
+        loader: 'babel-loader',
         options: {
-          objectAssign: 'Object.assign',
-          transforms: {
-            modules: false // Deshabilita la transformación de módulos
-          }
+          presets: ['@babel/preset-env', '@babel/preset-react'],
         },
+      },
+      {
+    
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
